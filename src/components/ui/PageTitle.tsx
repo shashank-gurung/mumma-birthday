@@ -2,30 +2,57 @@ import { motion } from 'framer-motion'
 
 interface PageTitleProps {
   children: React.ReactNode
-  theme?: 'pink' | 'night' | 'gold'
+  theme?: 'rose' | 'night' | 'gold'
   className?: string
 }
 
-const themeClass = {
-  pink: 'text-rose-900 drop-shadow-[0_2px_24px_rgba(255,182,212,0.8)]',
-  night: 'text-violet-50 drop-shadow-[0_2px_24px_rgba(167,139,250,0.5)]',
-  gold: 'text-amber-50 drop-shadow-[0_2px_24px_rgba(251,191,36,0.4)]',
+const themeStyles = {
+  rose: 'text-burgundy',
+  night: 'text-gold-soft',
+  gold: 'text-cream',
 }
 
 export function PageTitle({
   children,
-  theme = 'pink',
+  theme = 'rose',
   className = '',
 }: PageTitleProps) {
   return (
-    <motion.h1
+    <motion.div
       data-page-content
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`font-display text-center text-2xl leading-snug font-semibold sm:text-3xl md:text-4xl px-4 ${themeClass[theme]} ${className}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
+      className="flex flex-col items-center gap-4"
     >
-      {children}
-    </motion.h1>
+      {/* Decorative top line */}
+      <motion.div
+        className="h-px w-12 bg-current opacity-20"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      />
+      
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className={`font-display text-center text-2xl leading-[1.3] font-medium tracking-tight sm:text-3xl md:text-4xl px-4 ${themeStyles[theme]} ${className}`}
+      >
+        {children}
+      </motion.h1>
+
+      {/* Decorative bottom element */}
+      <motion.div
+        className="flex items-center gap-3 opacity-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+      >
+        <span className="h-px w-6 bg-current" />
+        <span className="h-1 w-1 rounded-full bg-current" />
+        <span className="h-px w-6 bg-current" />
+      </motion.div>
+    </motion.div>
   )
 }
