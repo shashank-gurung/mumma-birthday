@@ -3,16 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffd6e8" />
-    <meta name="description" content="A birthday journey for Mumma — made with love." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#fffaf5" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="description" content="A cinematic birthday journey for Mumma — crafted with love." />
+    <meta property="og:title" content="Happy Birthday Mumma" />
+    <meta property="og:description" content="A cinematic birthday journey crafted with love." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <title>Happy Birthday Mumma ❤️</title>
+    <title>Happy Birthday Mumma</title>
+    <style>
+      /* Critical CSS for instant load */
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        background: #fffaf5;
+        min-height: 100%;
+      }
+      /* Prevent FOUC */
+      #root {
+        opacity: 0;
+        animation: fadeIn 0.5s ease 0.1s forwards;
+      }
+      @keyframes fadeIn {
+        to { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

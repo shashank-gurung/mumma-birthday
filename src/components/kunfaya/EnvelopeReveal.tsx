@@ -5,10 +5,6 @@ import { LetterOverlay } from './LetterOverlay'
 
 type Phase = 'closed' | 'flap' | 'letter' | 'modal'
 
-const PAPER =
-  'linear-gradient(155deg, #faf6ee 0%, #f3ebe0 42%, #e8dece 100%)'
-const PAPER_TEXTURE = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
-
 export function EnvelopeReveal() {
   const [phase, setPhase] = useState<Phase>('closed')
 
@@ -26,13 +22,13 @@ export function EnvelopeReveal() {
 
   useEffect(() => {
     if (phase !== 'flap') return
-    const t = setTimeout(() => setPhase('letter'), 720)
+    const t = setTimeout(() => setPhase('letter'), 750)
     return () => clearTimeout(t)
   }, [phase])
 
   useEffect(() => {
     if (phase !== 'letter') return
-    const t = setTimeout(() => setPhase('modal'), 900)
+    const t = setTimeout(() => setPhase('modal'), 950)
     return () => clearTimeout(t)
   }, [phase])
 
@@ -40,20 +36,22 @@ export function EnvelopeReveal() {
     <>
       <div
         data-page-content
-        className={`flex flex-col items-center gap-6 transition-opacity duration-500 ${
-          showModal ? 'opacity-40 pointer-events-none' : ''
+        className={`flex flex-col items-center gap-8 transition-opacity duration-600 ${
+          showModal ? 'opacity-30 pointer-events-none' : ''
         }`}
       >
-        <p className="text-sm text-violet-200/70 tracking-wide">
-          {COPY.kunFayaKun.envelopeHint}
+        {/* Instruction text */}
+        <p className="font-body text-xs font-light uppercase tracking-[0.25em] text-gold-soft/40">
+          A letter awaits
         </p>
 
+        {/* Envelope container */}
         <motion.button
           type="button"
           onClick={handleOpen}
           disabled={open}
-          className="group relative mx-auto h-[200px] w-[min(88vw,300px)] focus:outline-none disabled:pointer-events-none"
-          style={{ perspective: 900 }}
+          className="group relative mx-auto h-[200px] w-[min(85vw,280px)] focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/30 focus-visible:ring-offset-4 focus-visible:ring-offset-night disabled:pointer-events-none"
+          style={{ perspective: 1000 }}
           whileTap={phase === 'closed' ? { scale: 0.98 } : undefined}
           aria-label="Open envelope"
           aria-expanded={open}
@@ -62,134 +60,126 @@ export function EnvelopeReveal() {
             className="relative h-full w-full"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* Shadow base */}
+            {/* Shadow */}
             <div
-              className="absolute left-1/2 bottom-2 h-4 w-[88%] -translate-x-1/2 rounded-[50%] bg-black/25 blur-md transition-opacity duration-500"
-              style={{ opacity: open ? 0.35 : 0.55 }}
+              className="absolute left-1/2 bottom-1 h-4 w-[85%] -translate-x-1/2 rounded-[50%] bg-black/40 blur-lg transition-opacity duration-500"
+              style={{ opacity: open ? 0.3 : 0.5 }}
             />
 
             {/* Envelope body */}
             <div
-              className="absolute inset-x-0 bottom-0 h-[68%] overflow-hidden rounded-b-md border border-[#d4c9b8]/80"
+              className="absolute inset-x-0 bottom-0 h-[65%] overflow-hidden rounded-b-md"
               style={{
-                background: PAPER,
-                boxShadow:
-                  '0 8px 28px rgba(30,25,20,0.22), inset 0 1px 0 rgba(255,255,255,0.65)',
+                background: 'linear-gradient(155deg, #f5e6c8 0%, #e8d4b0 50%, #d4c4a0 100%)',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5)',
+                border: '1px solid rgba(212,165,116,0.3)',
               }}
             >
-              <div
-                className="absolute inset-0 opacity-[0.05] mix-blend-multiply"
-                style={{ backgroundImage: PAPER_TEXTURE }}
-              />
-              {/* Side fold lines */}
-              <div
-                className="absolute left-0 top-0 h-full w-[42%] opacity-[0.12]"
+              {/* Paper texture */}
+              <div 
+                className="absolute inset-0 opacity-[0.03]"
                 style={{
-                  background:
-                    'linear-gradient(135deg, rgba(0,0,0,0.08) 0%, transparent 55%)',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                }}
+              />
+              
+              {/* Fold shadows */}
+              <div
+                className="absolute left-0 top-0 h-full w-[45%] opacity-10"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, transparent 50%)',
                   clipPath: 'polygon(0 0, 100% 0, 0 100%)',
                 }}
               />
               <div
-                className="absolute right-0 top-0 h-full w-[42%] opacity-[0.12]"
+                className="absolute right-0 top-0 h-full w-[45%] opacity-10"
                 style={{
-                  background:
-                    'linear-gradient(-135deg, rgba(0,0,0,0.08) 0%, transparent 55%)',
+                  background: 'linear-gradient(-135deg, rgba(0,0,0,0.1) 0%, transparent 50%)',
                   clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
-                }}
-              />
-              {/* Bottom V crease */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-[55%] opacity-[0.07]"
-                style={{
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.15), transparent)',
-                  clipPath: 'polygon(0 100%, 50% 0, 100% 100%)',
                 }}
               />
             </div>
 
-            {/* Inner letter — emerges before modal */}
+            {/* Inner letter */}
             <motion.div
-              className="absolute left-[12%] right-[12%] z-[2] overflow-hidden rounded-t-sm border border-[#e0d5c4]/90"
+              className="absolute left-[10%] right-[10%] z-[2] overflow-hidden rounded-t-sm"
               style={{
-                background: 'linear-gradient(180deg, #fffef9, #f8f4ec)',
-                boxShadow: '0 -2px 12px rgba(0,0,0,0.06)',
-                height: '58%',
-                bottom: '22%',
+                background: 'linear-gradient(180deg, #fffef9 0%, #faf6ee 100%)',
+                boxShadow: '0 -2px 15px rgba(0,0,0,0.08)',
+                border: '1px solid rgba(212,165,116,0.2)',
+                height: '55%',
+                bottom: '20%',
               }}
               initial={{ y: 0 }}
               animate={{
-                y: phase === 'letter' || phase === 'modal' ? '-115%' : 0,
+                y: phase === 'letter' || phase === 'modal' ? '-120%' : 0,
                 opacity: phase === 'modal' ? 0 : 1,
               }}
               transition={{
-                duration: 0.85,
+                duration: 0.9,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <div className="flex h-full flex-col items-center justify-end pb-4">
-                <div className="mb-2 h-0.5 w-12 rounded-full bg-rose-200/50" />
-                <span className="font-display text-xs italic text-stone-500/70">
-                  A letter for you…
+              <div className="flex h-full flex-col items-center justify-end pb-5">
+                <div className="mb-2 h-px w-10 bg-gold/30" />
+                <span className="font-display text-xs italic text-burgundy/50">
+                  A letter for you...
                 </span>
               </div>
             </motion.div>
 
-            {/* Front pocket lip */}
+            {/* Front pocket */}
             <div
-              className="absolute inset-x-0 z-[3] h-[38%] bottom-0 pointer-events-none"
+              className="absolute inset-x-0 z-[3] h-[36%] bottom-0 pointer-events-none"
               style={{
-                background: PAPER,
-                clipPath: 'polygon(0 35%, 50% 0, 100% 35%, 100% 100%, 0 100%)',
-                boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.4)',
-                borderBottom: '1px solid #d4c9b8',
+                background: 'linear-gradient(180deg, #f5e6c8 0%, #e8d4b0 100%)',
+                clipPath: 'polygon(0 32%, 50% 0, 100% 32%, 100% 100%, 0 100%)',
+                boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.3)',
+                borderBottom: '1px solid rgba(184,149,106,0.4)',
               }}
-            >
-              <div
-                className="absolute inset-0 opacity-[0.04]"
-                style={{ backgroundImage: PAPER_TEXTURE }}
-              />
-            </div>
+            />
 
             {/* Top flap */}
             <motion.div
-              className="absolute inset-x-0 top-[8%] z-[4] h-[48%] origin-top"
+              className="absolute inset-x-0 top-[10%] z-[4] h-[46%] origin-top"
               style={{ transformStyle: 'preserve-3d' }}
               animate={{
-                rotateX: phase !== 'closed' ? -168 : 0,
-                z: phase !== 'closed' ? -20 : 0,
+                rotateX: phase !== 'closed' ? -165 : 0,
+                z: phase !== 'closed' ? -15 : 0,
               }}
               transition={{
-                duration: 0.72,
+                duration: 0.75,
                 ease: [0.33, 1, 0.38, 1],
               }}
             >
               <div
-                className="h-full w-full border border-[#d4c9b8]/70"
+                className="h-full w-full"
                 style={{
-                  background: 'linear-gradient(180deg, #f8f2e8 0%, #ebe3d2 100%)',
+                  background: 'linear-gradient(180deg, #f0dfc4 0%, #e5d3b5 100%)',
                   clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-                  boxShadow:
-                    phase === 'closed'
-                      ? '0 6px 16px rgba(30,25,20,0.15)'
-                      : '0 2px 8px rgba(30,25,20,0.1)',
+                  boxShadow: phase === 'closed' ? '0 8px 20px rgba(0,0,0,0.15)' : 'none',
+                  border: '1px solid rgba(184,149,106,0.3)',
                 }}
               >
-                <div
-                  className="absolute inset-0 opacity-[0.05]"
-                  style={{ backgroundImage: PAPER_TEXTURE }}
-                />
-                {/* Wax seal hint */}
-                <div className="absolute left-1/2 bottom-[18%] flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full bg-rose-300/25 ring-1 ring-rose-400/30">
-                  <span className="text-[10px] text-rose-600/70">❤</span>
+                {/* Wax seal */}
+                <div className="absolute left-1/2 bottom-[20%] -translate-x-1/2">
+                  <div 
+                    className="flex h-8 w-8 items-center justify-center rounded-full"
+                    style={{
+                      background: 'linear-gradient(135deg, var(--color-rose-accent), var(--color-burgundy))',
+                      boxShadow: '0 2px 8px rgba(139,58,58,0.4), inset 0 1px 0 rgba(255,255,255,0.2)',
+                    }}
+                  >
+                    <span className="text-xs text-cream/90">&#10084;</span>
+                  </div>
                 </div>
               </div>
-              {/* Flap underside when open */}
+              
+              {/* Flap underside */}
               <div
                 className="absolute inset-0 -z-10"
                 style={{
-                  background: '#e5dcc8',
+                  background: '#d4c4a0',
                   clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
                   transform: 'rotateX(180deg)',
                   transformOrigin: 'top center',

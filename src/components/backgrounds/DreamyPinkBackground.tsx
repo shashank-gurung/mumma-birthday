@@ -1,36 +1,111 @@
 import { useEffect, useRef } from 'react'
 import { gsap, prefersReducedMotion } from '../../lib/gsap'
-import { GlowingBlobs } from './GlowingBlobs'
-import { FloatingParticles } from './FloatingParticles'
 
 export function DreamyPinkBackground() {
-  const meshRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const orb1Ref = useRef<HTMLDivElement>(null)
+  const orb2Ref = useRef<HTMLDivElement>(null)
+  const orb3Ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (prefersReducedMotion() || !meshRef.current) return
-    gsap.to(meshRef.current, {
-      backgroundPosition: '200% 50%',
-      duration: 18,
-      repeat: -1,
-      ease: 'none',
-    })
+    if (prefersReducedMotion() || !containerRef.current) return
+
+    const ctx = gsap.context(() => {
+      // Slow, cinematic orb movements
+      if (orb1Ref.current) {
+        gsap.to(orb1Ref.current, {
+          x: '+=30',
+          y: '+=20',
+          duration: 20,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+      if (orb2Ref.current) {
+        gsap.to(orb2Ref.current, {
+          x: '-=40',
+          y: '+=30',
+          duration: 25,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+      if (orb3Ref.current) {
+        gsap.to(orb3Ref.current, {
+          x: '+=25',
+          y: '-=35',
+          duration: 22,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        })
+      }
+    }, containerRef)
+
+    return () => ctx.revert()
   }, [])
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
+    <div ref={containerRef} className="fixed inset-0 -z-10 overflow-hidden">
+      {/* Base gradient - warm cream to soft blush */}
       <div
-        ref={meshRef}
         className="absolute inset-0"
         style={{
-          background:
-            'linear-gradient(135deg, #fff5f9 0%, #ffd6e8 25%, #ffb8d4 50%, #ffc9e0 75%, #fff0f5 100%)',
-          backgroundSize: '200% 200%',
+          background: 'linear-gradient(165deg, #fffaf5 0%, #fff5f0 25%, #ffede6 50%, #ffe8e0 75%, #ffdfd5 100%)',
         }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.5),transparent_55%)]" />
-      <GlowingBlobs />
-      <FloatingParticles />
-      <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
+
+      {/* Large ambient orbs - very soft and diffused */}
+      <div
+        ref={orb1Ref}
+        className="absolute -top-[20%] -left-[15%] h-[70vh] w-[70vh] rounded-full opacity-40"
+        style={{
+          background: 'radial-gradient(circle, rgba(255,210,195,0.6) 0%, rgba(255,210,195,0) 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+      <div
+        ref={orb2Ref}
+        className="absolute -bottom-[10%] -right-[10%] h-[60vh] w-[60vh] rounded-full opacity-35"
+        style={{
+          background: 'radial-gradient(circle, rgba(245,184,170,0.5) 0%, rgba(245,184,170,0) 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+      <div
+        ref={orb3Ref}
+        className="absolute top-[30%] right-[10%] h-[40vh] w-[40vh] rounded-full opacity-30"
+        style={{
+          background: 'radial-gradient(circle, rgba(212,165,116,0.3) 0%, rgba(212,165,116,0) 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+
+      {/* Subtle light overlay from top */}
+      <div 
+        className="absolute inset-0 opacity-60"
+        style={{
+          background: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,255,255,0.8) 0%, transparent 60%)',
+        }}
+      />
+
+      {/* Very subtle noise texture for depth */}
+      <div 
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Soft vignette for cinematic feel */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          boxShadow: 'inset 0 0 200px rgba(139, 58, 58, 0.05)',
+        }}
+      />
     </div>
   )
 }

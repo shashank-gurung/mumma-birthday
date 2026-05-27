@@ -15,9 +15,17 @@ export function ConfettiBurst({ active }: ConfettiBurstProps) {
       width={width}
       height={height}
       recycle={false}
-      numberOfPieces={400}
-      gravity={0.25}
-      colors={['#ffb8d4', '#ff9ec5', '#ffd6e8', '#f9a8d4', '#fce7f3', '#fbbf24']}
+      numberOfPieces={500}
+      gravity={0.18}
+      wind={0.01}
+      colors={[
+        '#d4a574', // gold
+        '#f5e6c8', // gold-soft
+        '#ffdad0', // rose-soft
+        '#c76a5e', // rose-accent
+        '#fffaf5', // cream
+        '#b8956a', // gold-deep
+      ]}
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 100 }}
     />
   )
