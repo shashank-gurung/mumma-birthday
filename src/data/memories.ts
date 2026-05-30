@@ -1,49 +1,86 @@
 import type { CarouselMemory, MemoryItem } from '../types'
 
-/** Replace image paths with your own photos in /public/assets/memories/ */
 export const FLASH_MEMORIES: MemoryItem[] = [
   {
     id: '1',
-    title: 'Morning smiles',
-    caption: 'The way you light up every room before the sun does.',
-    image: '/assets/memories/memory-1.jpg',
+    title: 'Beautiful memories',
+    caption: 'Every smile with you became a memory worth keeping forever ❤️',
+    image: '/src/assets/image/IMG_0552.JPG',
     accent: '#ffb8d4',
   },
   {
     id: '2',
-    title: 'Kitchen stories',
-    caption: 'Chai, laughter, and your stories that never ended.',
-    image: '/assets/memories/memory-2.jpg',
+    title: 'Childhood days',
+    caption: 'The days when life was simple and happiness was effortless ❤️',
+    image: '/src/assets/image/IMG_0571.JPG',
     accent: '#ffc9e0',
   },
   {
     id: '3',
-    title: 'Festival glow',
-    caption: 'Diyas, rangoli, and your hands guiding mine.',
-    image: '/assets/memories/memory-3.jpg',
+    title: 'Family moments',
+    caption: 'The best memories are always the ones spent together ❤️',
+    image: '/src/assets/image/IMG_0663.JPG',
     accent: '#ff9ec5',
   },
   {
     id: '4',
-    title: 'Quiet afternoons',
-    caption: 'Those slow hours when the world felt perfectly safe.',
-    image: '/assets/memories/memory-4.jpg',
+    title: 'Birthday happiness',
+    caption: 'A day filled with cake, laughter and endless love ❤️',
+    image: '/src/assets/image/IMG_1220.JPG',
     accent: '#ffd6e8',
   },
   {
     id: '5',
-    title: 'Forever home',
-    caption: 'Every memory leads back to you, Mumma.',
-    image: '/assets/memories/memory-5.jpg',
+    title: 'Special memories',
+    caption: 'Some moments pass, but they never leave the heart ❤️',
+    image: '/src/assets/image/DSC_0126.JPG',
     accent: '#ffe8f2',
+  },
+  {
+    id: '6',
+    title: 'Together forever',
+    caption: 'Thank you for making every chapter of my life beautiful ❤️',
+    image: '/src/assets/image/DSC_0400.JPG',
+    accent: '#ffb8d4',
+  },
+  {
+    id: '7',
+    title: 'My favourite people',
+    caption: 'No matter how much time passes, these moments remain priceless ❤️',
+    image: '/src/assets/image/DSC_0414.JPG',
+    accent: '#ffc9e0',
   },
 ]
 
 export const CAROUSEL_MEMORIES: CarouselMemory[] = [
-  { id: 'c1', label: 'Your warm hug', image: '/assets/memories/carousel-1.jpg' },
-  { id: 'c2', label: 'Sunday breakfasts', image: '/assets/memories/carousel-2.jpg' },
-  { id: 'c3', label: 'Rainy window talks', image: '/assets/memories/carousel-3.jpg' },
-  { id: 'c4', label: 'Temple visits', image: '/assets/memories/carousel-4.jpg' },
-  { id: 'c5', label: 'Birthday surprises', image: '/assets/memories/carousel-5.jpg' },
-  { id: 'c6', label: 'Late night care', image: '/assets/memories/carousel-6.jpg' },
+  {
+    id: 'c1',
+    label: 'Memory 1',
+    image: '/src/assets/image/DSC_0420.JPG',
+  },
+  {
+    id: 'c2',
+    label: 'Memory 2',
+    image: '/src/assets/image/DSC_0429.JPG',
+  },
+  {
+    id: 'c3',
+    label: 'Memory 3',
+    image: '/src/assets/image/IMG_0552.JPG',
+  },
+  {
+    id: 'c4',
+    label: 'Memory 4',
+    image: '/src/assets/image/IMG_0571.JPG',
+  },
+  {
+    id: 'c5',
+    label: 'Memory 5',
+    image: '/src/assets/image/IMG_0663.JPG',
+  },
+  {
+    id: 'c6',
+    label: 'Memory 6',
+    image: '/src/assets/image/IMG_1220.JPG',
+  },
 ]
